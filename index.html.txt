@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dawg House Events</title>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: "Poppins", sans-serif;
+}
+
+body {
+background-color: #f5e9d3; /* beige tone */
+color: #222;
+}
+
+header {
+background-color: #8b0000; /* dark red */
+color: white;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 1rem 2rem;
+}
+
+.logo {
+font-size: 1.5rem;
+font-weight: 700;
+letter-spacing: 2px;
+}
+
+nav a {
+color: white;
+text-decoration: none;
+margin-left: 1.5rem;
+font-weight: 500;
+transition: 0.3s;
+}
+
+nav a:hover, nav a.active {
+color: #f5e9d3;
+border-bottom: 2px solid #f5e9d3;
+}
+
+.hero {
+text-align: center;
+padding: 5rem 2rem;
+background: linear-gradient(to right, #8b0000, #a52a2a);
+color: white;
+}
+
+.hero h1 {
+font-size: 3rem;
+margin-bottom: 1rem;
+letter-spacing: 2px;
+}
+
+.hero p {
+font-size: 1.3rem;
+margin-bottom: 2rem;
+}
+
+.btn {
+background-color: #f5e9d3;
+color: #8b0000;
+padding: 0.8rem 2rem;
+border-radius: 30px;
+text-decoration: none;
+font-weight: 600;
+transition: 0.3s;
+}
+
+.btn:hover {
+background-color: white;
+box-shadow: 0 0 10px #f5e9d3;
+}
+
+section {
+padding: 4rem 2rem;
+max-width: 1000px;
+margin: auto;
+}
+
+h2 {
+color: #8b0000;
+margin-bottom: 1rem;
+text-align: center;
+}
+
+.about p {
+text-align: center;
+line-height: 1.8;
+font-size: 1.1rem;
+}
+
+.event-card {
+background: white;
+border-radius: 15px;
+padding: 2rem;
+box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+margin-top: 2rem;
+text-align: center;
+}
+
+.event-card h3 {
+color: #8b0000;
+margin-bottom: 0.5rem;
+}
+
+form {
+display: flex;
+flex-direction: column;
+gap: 1rem;
+background: white;
+padding: 2rem;
+border-radius: 15px;
+box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+max-width: 600px;
+margin: 2rem auto;
+}
+
+input, textarea {
+padding: 0.8rem;
+border: 1px solid #ccc;
+border-radius: 8px;
+font-size: 1rem;
+}
+
+button {
+background-color: #8b0000;
+color: white;
+border: none;
+padding: 0.8rem;
+border-radius: 8px;
+font-size: 1rem;
+cursor: pointer;
+transition: 0.3s;
+}
+
+button:hover {
+background-color: #a52a2a;
+}
+
+footer {
+background-color: #8b0000;
+color: white;
+text-align: center;
+padding: 1.5rem;
+margin-top: 3rem;
+}
+
+/* Navigation section for switching between “pages” */
+.page {
+display: none;
+}
+
+.page.active {
+display: block;
+}
+
+.nav-link {
+cursor: pointer;
+}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">DAWG HOUSE EVENTS</div>
+<nav>
+<a class="nav-link active" data-page="home">Home</a>
+<a class="nav-link" data-page="tables">Tables</a>
+<a class="nav-link" data-page="contact">Contact</a>
+</nav>
+</header>
+
+<!-- HOME PAGE -->
+<div id="home" class="page active">
+<section class="hero">
+<h1>JOIN OUR NEXT EVENT</h1>
+<p>Dawg House Trade Night — October 18th, 2025</p>
+<a class="btn nav-link" data-page="tables">Book a Table</a>
+</section>
+
+<section class="about">
+<h2>About Dawg House Events</h2>
+<p>We bring collectors, vendors, and hobby enthusiasts together for amazing trade nights and community card shows. Our events are built around fun, deals, and a love for the hobby. Whether you're here to buy, sell, or just connect — this is the place to be.</p>
+
+<div class="event-card">
+<h3>Upcoming Event: Dawg House Trade Night</h3>
+<p><strong>Date:</strong> October 18th, 2025</p>
+<p><strong>Location:</strong> Dawg House Sports Lounge</p>
+<p><strong>Time:</strong> 6PM – 11PM</p>
+<p>Enjoy trading, raffles, and great vibes. Reserve your vendor table early!</p>
+</div>
+</section>
+</div>
+
+<!-- TABLES PAGE -->
+<div id="tables" class="page">
+<section>
+<h2>Book Your Table</h2>
+<p style="text-align:center;">Reserve a vendor table for our next Dawg House Trade Night.</p>
+
+<form>
+<input type="text" placeholder="Full Name" required>
+<input type="email" placeholder="Email Address" required>
+<input type="tel" placeholder="Phone Number" required>
+<input type="number" placeholder="Number of Tables" min="1" max="10" required>
+<textarea placeholder="Special Requests or Notes"></textarea>
+<button type="submit">Submit Booking</button>
+</form>
+</section>
+</div>
+
+<!-- CONTACT PAGE -->
+<div id="contact" class="page">
+<section>
+<h2>Contact Us</h2>
+<p style="text-align:center;">Have questions about Dawg House Events? Reach out below!</p>
+
+<form>
+<input type="text" placeholder="Your Name" required>
+<input type="email" placeholder="Your Email" required>
+<textarea placeholder="Your Message" rows="5" required></textarea>
+<button type="submit">Send Message</button>
+</form>
+</section>
+</div>
+
+<footer>
+<p>© 2025 Dawg House Events | All Rights Reserved</p>
+</footer>
+
+<script>
+// Simple navigation between pages (no reload)
+const navLinks = document.querySelectorAll(".nav-link");
+const pages = document.querySelectorAll(".page");
+
+navLinks.forEach(link => {
+link.addEventListener("click", () => {
+const pageId = link.getAttribute("data-page");
+
+pages.forEach(page => page.classList.remove("active"));
+navLinks.forEach(n => n.classList.remove("active"));
+
+document.getElementById(pageId).classList.add("active");
+link.classList.add("active");
+});
+});
+</script>
+</body>
+</html>
