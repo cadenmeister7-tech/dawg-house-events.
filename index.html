@@ -1,371 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dawg House Events - Table Booking</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Fredoka One', cursive;
-      background-color: #f9f9f9;
-      color: #111;
-    }
-
-    header {
-      background-color: #111;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-    }
-
-    .logo {
-      font-size: 2rem;
-      letter-spacing: 2px;
-      color: #e63946;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 1.5rem;
-      font-weight: 500;
-      transition: 0.3s;
-    }
-
-    nav a:hover, nav a.active {
-      color: #e63946;
-      border-bottom: 2px solid #e63946;
-    }
-
-    section {
-      padding: 3rem 2rem;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 2rem;
-      color: #e63946;
-    }
-
-    /* Hero */
-    .hero {
-      text-align: center;
-      padding: 4rem 2rem;
-      background: linear-gradient(to right, #e63946, #f1faee);
-      color: #111;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-
-    .hero p {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .btn {
-      background-color: #e63946;
-      color: white;
-      padding: 0.8rem 2rem;
-      border-radius: 30px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: 0.3s;
-      display: inline-block;
-    }
-
-    .btn:hover {
-      background-color: #d62828;
-      box-shadow: 0 0 15px rgba(230,57,70,0.5);
-    }
-
-    /* Floor plan layout */
-    .floor-plan {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 20px;
-      margin-top: 2rem;
-      justify-items: center;
-    }
-
-    .table {
-      width: 120px;
-      height: 60px;
-      background-color: #fff;
-      border: 3px solid #111;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      cursor: pointer;
-      position: relative;
-      transition: 0.3s;
-    }
-
-    .table.selected {
-      background-color: #e63946;
-      color: white;
-      border-color: #d62828;
-      transform: scale(1.05);
-      box-shadow: 0 0 10px rgba(230,57,70,0.7);
-    }
-
-    .table.occupied {
-      background-color: #555;
-      color: #ccc;
-      cursor: not-allowed;
-    }
-
-    .table-label {
-      position: absolute;
-      top: -20px;
-      font-size: 0.9rem;
-      color: #111;
-    }
-
-    .selected-info {
-      margin-top: 1rem;
-      text-align: center;
-      font-size: 1.2rem;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      background: #fff;
-      padding: 2rem;
-      border-radius: 15px;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-      max-width: 600px;
-      margin: 2rem auto;
-    }
-
-    input, textarea {
-      padding: 0.8rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 1rem;
-    }
-
-    button {
-      background-color: #e63946;
-      color: white;
-      border: none;
-      padding: 0.8rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background-color: #d62828;
-    }
-
-    footer {
-      background-color: #111;
-      color: white;
-      text-align: center;
-      padding: 1.5rem;
-      margin-top: 3rem;
-    }
-
-    /* Navigation */
-    .page {
-      display: none;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    .nav-link {
-      cursor: pointer;
-    }
-
-    /* Upcoming event graphic */
-    .upcoming-event {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-color: #111;
-      color: white;
-      border-radius: 20px;
-      padding: 2rem;
-      margin: 3rem auto;
-      max-width: 700px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-
-    .event-graphic {
-      width: 100%;
-      height: 200px;
-      background: linear-gradient(135deg, #e63946, #f1faee);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      color: #111;
-      border-radius: 15px;
-      margin-bottom: 1rem;
-    }
-
-    @media (max-width:768px){
-      .floor-plan {
-        grid-template-columns: repeat(2,1fr);
-      }
-
-      .table{
-        width: 100px;
-        height: 50px;
-      }
-
-      .event-graphic{
-        font-size: 1.5rem;
-        height: 150px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade Night Table Selection</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #111;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .floor-plan {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .table {
+            background-color: #fff;
+            border: 2px solid #ccc;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+        }
+        .table.selected {
+            background-color: #e63946;
+            color: white;
+            border-color: #d62828;
+        }
+        .table.occupied {
+            background-color: #555;
+            color: #ccc;
+            border-color: #444;
+            cursor: not-allowed;
+        }
+        .table img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .table-number {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container button {
+            background-color: #e63946;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .form-container button:hover {
+            background-color: #d62828;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="logo">DAWG HOUSE EVENTS</div>
-    <nav>
-      <a class="nav-link active" data-page="home">Home</a>
-      <a class="nav-link" data-page="tables">Tables</a>
-      <a class="nav-link" data-page="contact">Contact</a>
-    </nav>
-  </header>
 
-  <!-- Home Page -->
-  <div id="home" class="page active">
-    <section class="hero">
-      <h1>JOIN OUR NEXT EVENT</h1>
-      <p>Dawg House Trade Night — October 18th, 2025</p>
-      <a class="btn nav-link" data-page="tables">Book a Table</a>
-    </section>
+<header>
+    <h1>Trade Night Table Selection</h1>
+    <p>Select your table below and complete the form to reserve your spot!</p>
+</header>
 
-    <section>
-      <h2>Upcoming Events</h2>
-      <div class="upcoming-event">
-        <div class="event-graphic">Dawg House Trade Night</div>
-        <p><strong>Date:</strong> October 18th, 2025</p>
-        <p><strong>Time:</strong> 6PM - 11PM</p>
-        <p><strong>Location:</strong> Dawg House Sports Lounge</p>
-        <p>Join us for trading, raffles, and fun!</p>
-      </div>
-    </section>
-  </div>
+<div class="container">
+    <div class="floor-plan" id="floorPlan">
+        <!-- Tables will be dynamically generated here -->
+    </div>
 
-  <!-- Tables Page -->
-  <div id="tables" class="page">
-    <section>
-      <h2>Select Your Table</h2>
-      <p style="text-align:center;">Click a table to purchase it online.</p>
+    <div class="form-container">
+        <h2>Reservation Form</h2>
+        <form id="reservationForm">
+            <input type="text" id="fullName" name="fullName" placeholder="Full Name" required>
+            <input type="email" id="email" name="email" placeholder="Email Address" required>
+            <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+            <input type="hidden" id="selectedTable" name="selectedTable">
+            <textarea id="notes" name="notes" placeholder="Special Requests or Notes"></textarea>
+            <button type="submit">Reserve Table</button>
+        </form>
+    </div>
+</div>
 
-      <div class="floor-plan" id="floorPlan"></div>
+<script>
+    // Data for tables: table number and availability
+    const tablesData = [
+        { number: 1, occupied: false },
+        { number: 2, occupied: true },
+        { number: 3, occupied: false },
+        { number: 4, occupied: false },
+        { number: 5, occupied: true },
+        { number: 6, occupied: false },
+        { number: 7, occupied: false },
+        { number: 8, occupied: true },
+        { number: 9, occupied: false },
+        { number: 10, occupied: false },
+        { number: 11, occupied: true },
+        { number: 12, occupied: false },
+        { number: 13, occupied: false },
+        { number: 14, occupied: true },
+        { number: 15, occupied: false },
+        { number: 16, occupied: false },
+        { number: 17, occupied: true },
+        { number: 18, occupied: false },
+        { number: 19, occupied: false },
+        { number: 20, occupied: true }
+    ];
 
-      <div class="selected-info" id="selectedInfo">No table selected.</div>
-
-      <form id="purchaseForm">
-        <input type="text" name="fullname" placeholder="Full Name" required>
-        <input type="email" name="email" placeholder="Email Address" required>
-        <input type="tel" name="phone" placeholder="Phone Number" required>
-        <input type="hidden" name="tableNumber" id="tableNumber" required>
-        <textarea name="notes" placeholder="Special Requests or Notes"></textarea>
-        <button type="submit">Purchase Table</button>
-      </form>
-    </section>
-  </div>
-
-  <!-- Contact Page -->
-  <div id="contact" class="page">
-    <section>
-      <h2>Contact Us</h2>
-      <p style="text-align:center;">Have questions about Dawg House Events? Reach out below!</p>
-
-      <form>
-        <input type="text" placeholder="Your Name" required>
-        <input type="email" placeholder="Your Email" required>
-        <textarea placeholder="Your Message" rows="5" required></textarea>
-        <button type="submit">Send Message</button>
-      </form>
-    </section>
-  </div>
-
-  <footer>
-    <p>© 2025 Dawg House Events | All Rights Reserved</p>
-  </footer>
-
-  <script>
-    // Navigation
-    const navLinks = document.querySelectorAll(".nav-link");
-    const pages = document.querySelectorAll(".page");
-
-    navLinks.forEach(link => {
-      link.addEventListener("click", () => {
-        const pageId = link.getAttribute("data-page");
-        pages.forEach(page => page.classList.remove("active"));
-        navLinks.forEach(n => n.classList.remove("active"));
-        document.getElementById(pageId).classList.add("active");
-        link.classList.add("active");
-      });
-    });
-
-    // Floor Plan Table Setup
-    const floorPlan = document.getElementById('floorPlan');
-    const selectedInfo = document.getElementById('selectedInfo');
-    const tableNumberInput = document.getElementById('tableNumber');
-
-    const totalTables = 20;
-    const occupiedTables = [3, 7, 12, 15]; // already booked
-
-    for (let i = 1; i <= totalTables; i++) {
-      const table = document.createElement('div');
-      table.classList.add('table');
-      table.textContent = i;
-      if(occupiedTables.includes(i)){
-        table.classList.add('occupied');
-      }
-
-      table.addEventListener('click', () => {
-        if(table.classList.contains('occupied')) return;
-        document.querySelectorAll('.table').forEach(t=>t.classList.remove('selected'));
-        table.classList.add('selected');
-        selectedInfo.textContent = `Table ${i} selected`;
-        tableNumberInput.value = i;
-      });
-
-      floorPlan.appendChild(table);
+    // Function to generate table elements
+    function generateTables() {
+        const floorPlan = document.getElementById('floorPlan');
+        tablesData.forEach(table => {
+            const tableDiv = document.createElement('div');
+            tableDiv.classList.add('table');
+            if (table.occupied) {
+                tableDiv.classList.add('occupied');
+            }
+            tableDiv.innerHTML = `
+                <div class="table-number">${table.number}</div>
+                <img src="https://via.placeholder.com/150" alt="Table ${table.number}">
+            `;
+            tableDiv.addEventListener('click', () => selectTable(table));
+            floorPlan.appendChild(tableDiv);
+        });
     }
 
-    // Purchase form
-    document.getElementById('purchaseForm').addEventListener('submit', e=>{
-      e.preventDefault();
-      if(!tableNumberInput.value){
-        alert('Please select a table first!');
-        return;
-      }
-      alert(`Table ${tableNumberInput.value} purchased!`);
-      e.target.reset();
-      document.querySelectorAll('.table').forEach(t=>t.classList.remove('selected'));
-      selectedInfo.textContent = 'No table selected.';
+    // Function to handle table selection
+    function selectTable(table) {
+        if (table.occupied) {
+            alert('This table is already reserved.');
+            return;
+        }
+        const selectedTable = document.querySelector('.table.selected');
+        if (selectedTable) {
+            selectedTable.classList.remove('selected');
+        }
+        const tableDiv = document.querySelector(`.table:nth-child(${table.number})`);
+        tableDiv.classList.add('selected');
+        document.getElementById('selectedTable').value = table.number;
+    }
+
+    // Handle form submission
+    document.getElementById('reservationForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const selectedTableNumber = document.getElementById('selectedTable').value;
+        if (!selectedTableNumber) {
+            alert('Please select a table first.');
+            return;
+        }
+        alert(`Table ${selectedTableNumber} reserved successfully!`);
+        // Here, you can add code to send the form data to your server or handle it as needed
     });
-  </script>
+
+    // Initialize the table layout
+    generateTables();
+</script>
+
 </body>
 </html>
-
