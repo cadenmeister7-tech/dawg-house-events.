@@ -1,191 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trade Night Table Selection</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-        header {
-            background-color: #111;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-        }
-        .container {
-            width: 80%;
-            margin: 20px auto;
-        }
-        .floor-plan {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .table {
-            background-color: #fff;
-            border: 2px solid #ccc;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-        }
-        .table.selected {
-            background-color: #e63946;
-            color: white;
-            border-color: #d62828;
-        }
-        .table.occupied {
-            background-color: #555;
-            color: #ccc;
-            border-color: #444;
-            cursor: not-allowed;
-        }
-        .table img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-        }
-        .table-number {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 2px 5px;
-            border-radius: 3px;
-            font-weight: bold;
-        }
-        .form-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .form-container input, .form-container textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .form-container button {
-            background-color: #e63946;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-        }
-        .form-container button:hover {
-            background-color: #d62828;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dawg House Events</title>
+<style>
+/* ---------- Global Styles ---------- */
+body { margin:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#fff; color:#111; }
+header, footer { text-align:center; background:#111; color:#fff; padding:20px; }
+header h1{margin:0;font-size:2.5rem; color:#e63946;} 
+header p{margin:5px 0 0 0; color:#d8cab8;}
+main{max-width:1200px;margin:20px auto;padding:0 15px;}
+button{cursor:pointer;}
+
+/* ---------- Event Cards ---------- */
+.events-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px;}
+.event-card{background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,0.2); transition:0.3s;}
+.event-card:hover{transform:translateY(-5px); box-shadow:0 10px 25px rgba(0,0,0,0.3);}
+.event-card img{width:100%; height:180px; object-fit:cover; filter: grayscale(50%) contrast(120%);}
+.event-card .content{padding:15px;}
+.event-card h3{margin:0 0 10px 0; font-size:1.25rem; color:#111;}
+.event-card p{margin:0 0 10px 0; font-size:0.9rem; color:#555;}
+.event-card button{background:#e63946; color:#fff; border:none; padding:8px 15px; border-radius:6px; font-weight:bold; transition:0.3s;}
+.event-card button:hover{background:#d62828;}
+
+/* ---------- Event Details ---------- */
+.event-details img{width:100%; border-radius:12px; margin-bottom:15px; filter: grayscale(50%) contrast(120%);}
+.event-details h2{margin-top:0; font-size:2rem; color:#111;}
+.event-details p{line-height:1.5; margin-bottom:10px;}
+.event-details ul{list-style:disc; padding-left:20px; margin-bottom:20px;}
+.event-details button{background:#e63946; color:#fff; border:none; padding:10px 20px; border-radius:8px; font-weight:bold; margin-right:10px; transition:0.3s;}
+.event-details button:hover{background:#d62828;}
+
+/* ---------- Seat Picker ---------- */
+.seat-grid{display:inline-block; background:#f8f8f8; padding:15px; border-radius:12px; margin-bottom:20px; border:2px solid #111;}
+.seat-row{display:flex; margin-bottom:5px;}
+.seat{width:35px; height:35px; margin:2px; text-align:center; line-height:35px; border-radius:6px; cursor:pointer; user-select:none; font-size:0.8rem; transition:0.2s; background:#fff; border:1px solid #111; color:#111;}
+.seat:hover{transform:scale(1.1); background:#e63946; color:#fff;}
+.seat.selected{background:#e63946;color:#fff; border:1px solid #d62828;}
+.seat.taken{background:#aaa; cursor:not-allowed;}
+.seat.premium{border:2px solid #d8cab8;}
+.seat.corner{border:2px solid #e63946;}
+
+/* ---------- Cart ---------- */
+.cart{background:#fff; padding:15px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.2); max-width:500px; margin-bottom:30px;}
+.cart h4{margin-top:0; color:#111;}
+.cart-item{display:flex; justify-content:space-between; margin-bottom:5px;}
+.cart-item button{background:none; border:none; color:red; cursor:pointer;}
+
+/* ---------- Buttons ---------- */
+.btn{padding:8px 15px; border-radius:6px; font-weight:bold; border:none; cursor:pointer;}
+.btn-back{background:#d8cab8; color:#111;}
+.btn-back:hover{background:#cbb79f;}
+.btn-reserve{background:#e63946; color:#fff;}
+.btn-reserve:hover{background:#d62828;}
+
+/* ---------- Footer ---------- */
+footer p{margin:5px 0 0 0; font-size:0.9rem; color:#d8cab8;}
+
+/* ---------- Responsive ---------- */
+@media (max-width:600px){.seat{width:28px;height:28px;line-height:28px;font-size:0.7rem;}}
+</style>
 </head>
 <body>
 
 <header>
-    <h1>Trade Night Table Selection</h1>
-    <p>Select your table below and complete the form to reserve your spot!</p>
+<h1>Dawg House Events</h1>
+<p>Professional Event Planning for Card, Car, and Vintage Shows</p>
 </header>
 
-<div class="container">
-    <div class="floor-plan" id="floorPlan">
-        <!-- Tables will be dynamically generated here -->
-    </div>
+<main id="main">
+<!-- Content injected by JS -->
+</main>
 
-    <div class="form-container">
-        <h2>Reservation Form</h2>
-        <form id="reservationForm">
-            <input type="text" id="fullName" name="fullName" placeholder="Full Name" required>
-            <input type="email" id="email" name="email" placeholder="Email Address" required>
-            <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
-            <input type="hidden" id="selectedTable" name="selectedTable">
-            <textarea id="notes" name="notes" placeholder="Special Requests or Notes"></textarea>
-            <button type="submit">Reserve Table</button>
-        </form>
-    </div>
-</div>
+<footer>
+<p>&copy; 2025 Dawg House Events</p>
+<p>Contact: hello@dawghouse.events | (312) 555-0199</p>
+</footer>
 
 <script>
-    // Data for tables: table number and availability
-    const tablesData = [
-        { number: 1, occupied: false },
-        { number: 2, occupied: true },
-        { number: 3, occupied: false },
-        { number: 4, occupied: false },
-        { number: 5, occupied: true },
-        { number: 6, occupied: false },
-        { number: 7, occupied: false },
-        { number: 8, occupied: true },
-        { number: 9, occupied: false },
-        { number: 10, occupied: false },
-        { number: 11, occupied: true },
-        { number: 12, occupied: false },
-        { number: 13, occupied: false },
-        { number: 14, occupied: true },
-        { number: 15, occupied: false },
-        { number: 16, occupied: false },
-        { number: 17, occupied: true },
-        { number: 18, occupied: false },
-        { number: 19, occupied: false },
-        { number: 20, occupied: true }
-    ];
+// ================== Data ==================
+const EVENTS = [
+  {
+    id:1,name:"Dawg House Card Show - Nov 1, 2025",date:"Nov 1, 2025",location:"Dawg House Convention Center, Chicago, IL",
+    description:"Join us for our largest trading card event! Vendors showcase collectibles, memorabilia, and more.",
+    amenities:["Free Wi-Fi","Loading dock access","Electric hookups","24/7 security","Food court"],
+    rows:8,cols:12,premiumRows:[1,2],
+    cornerSeats:[{r:1,c:1},{r:1,c:12},{r:8,c:1},{r:8,c:12}],reserved:[]
+  },
+  {
+    id:2,name:"Dawg House Car & Vintage Show - Oct 10, 2025",date:"Oct 10, 2025",location:"Downtown Motor Hall, Detroit, MI",
+    description:"Experience vintage and modern vehicles. Vendors include restorers, services, and memorabilia collectors.",
+    amenities:["Indoor/Outdoor booths","Premium parking","EV charging","Photography packages","Networking mixer"],
+    rows:6,cols:10,premiumRows:[1],cornerSeats:[{r:1,c:1},{r:1,c:10},{r:6,c:1},{r:6,c:10}],reserved:[]
+  }
+];
 
-    // Function to generate table elements
-    function generateTables() {
-        const floorPlan = document.getElementById('floorPlan');
-        tablesData.forEach(table => {
-            const tableDiv = document.createElement('div');
-            tableDiv.classList.add('table');
-            if (table.occupied) {
-                tableDiv.classList.add('occupied');
-            }
-            tableDiv.innerHTML = `
-                <div class="table-number">${table.number}</div>
-                <img src="https://via.placeholder.com/150" alt="Table ${table.number}">
-            `;
-            tableDiv.addEventListener('click', () => selectTable(table));
-            floorPlan.appendChild(tableDiv);
-        });
+let currentPage='home',selectedEvent=null,selectedSeats=[];
+const main=document.getElementById('main');
+
+// ================== Functions ==================
+function showHome(){
+  currentPage='home';
+  main.innerHTML='<h2 style="text-align:center;color:#111;">Upcoming Events</h2><div class="events-grid"></div>';
+  const grid=main.querySelector('.events-grid');
+  EVENTS.forEach(ev=>{
+    const card=document.createElement('div');
+    card.className='event-card';
+    card.innerHTML=`<img src="https://picsum.photos/400/200?random=${ev.id}" alt="${ev.name}">
+      <div class="content">
+        <h3>${ev.name}</h3>
+        <p>${ev.date} | ${ev.location}</p>
+        <p>${ev.description.substring(0,100)}...</p>
+        <button onclick="showEventDetails(${ev.id})">View Details</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function showEventDetails(eventId){
+  currentPage='details';
+  selectedEvent=EVENTS.find(e=>e.id===eventId);
+  selectedSeats=[];
+  main.innerHTML=`<div class="event-details">
+    <button class="btn btn-back" onclick="showHome()">← Back to Events</button>
+    <h2>${selectedEvent.name}</h2>
+    <p><strong>Date:</strong> ${selectedEvent.date}</p>
+    <p><strong>Location:</strong> ${selectedEvent.location}</p>
+    <p>${selectedEvent.description}</p>
+    <h3>Amenities:</h3>
+    <ul>${selectedEvent.amenities.map(a=>`<li>${a}</li>`).join('')}</ul>
+    <button class="btn btn-reserve" onclick="showSeatPicker()">Pick Your Booths</button>
+  </div>`;
+}
+
+function showSeatPicker(){
+  currentPage='seats';
+  selectedSeats=[];
+  main.innerHTML=`<button class="btn btn-back" onclick="showEventDetails(${selectedEvent.id})">← Back to Details</button>
+    <h2>${selectedEvent.name} - Select Booths</h2>
+    <div id="seat-grid" class="seat-grid"></div>
+    <div class="cart" id="cart"><h4>Selected Booths: None</h4></div>
+    <button class="btn btn-reserve" onclick="reserveSeats()">Reserve Booths</button>`;
+  renderSeats();
+}
+
+function renderSeats(){
+  const grid=document.getElementById('seat-grid'); grid.innerHTML='';
+  for(let r=1;r<=selectedEvent.rows;r++){
+    const rowDiv=document.createElement('div'); rowDiv.className='seat-row';
+    for(let c=1;c<=selectedEvent.cols;c++){
+      const seat=document.createElement('div'); seat.className='seat'; seat.textContent=c;
+      if(selectedEvent.premiumRows.includes(r)) seat.classList.add('premium');
+      if(selectedEvent.cornerSeats.some(s=>s.r===r && s.c===c)) seat.classList.add('corner');
+      if(selectedEvent.reserved.some(s=>s.r===r && s.c===c)) seat.classList.add('taken');
+      seat.onclick=()=>toggleSeat(r,c,seat);
+      rowDiv.appendChild(seat);
     }
+    grid.appendChild(rowDiv);
+  }
+  updateCart();
+}
 
-    // Function to handle table selection
-    function selectTable(table) {
-        if (table.occupied) {
-            alert('This table is already reserved.');
-            return;
-        }
-        const selectedTable = document.querySelector('.table.selected');
-        if (selectedTable) {
-            selectedTable.classList.remove('selected');
-        }
-        const tableDiv = document.querySelector(`.table:nth-child(${table.number})`);
-        tableDiv.classList.add('selected');
-        document.getElementById('selectedTable').value = table.number;
-    }
+function toggleSeat(r,c,seatDiv){
+  const key=`R${r}C${c}`;
+  if(seatDiv.classList.contains('taken')) return;
+  if(seatDiv.classList.contains('selected')){
+    seatDiv.classList.remove('selected');
+    selectedSeats=selectedSeats.filter(s=>s!==key);
+  } else {
+    seatDiv.classList.add('selected');
+    selectedSeats.push(key);
+  }
+  updateCart();
+}
 
-    // Handle form submission
-    document.getElementById('reservationForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const selectedTableNumber = document.getElementById('selectedTable').value;
-        if (!selectedTableNumber) {
-            alert('Please select a table first.');
-            return;
-        }
-        alert(`Table ${selectedTableNumber} reserved successfully!`);
-        // Here, you can add code to send the form data to your server or handle it as needed
-    });
+function updateCart(){
+  const cart=document.getElementById('cart'); if(!cart) return;
+  cart.innerHTML=`<h4>Selected Booths: ${selectedSeats.join(', ') || 'None'}</h4>`;
+}
 
-    // Initialize the table layout
-    generateTables();
+function reserveSeats(){
+  if(selectedSeats.length===0){ alert('Select at least one booth'); return; }
+  selectedSeats.forEach(s=>{
+    const r=parseInt(s.slice(1,s.indexOf('C'))); 
+    const c=parseInt(s.slice(s.indexOf('C')+1));
+    selectedEvent.reserved.push({r,c});
+  });
+  alert('Booths reserved: '+selectedSeats.join(', '));
+  showSeatPicker();
+}
+
+// ================== Initialize ==================
+showHome();
 </script>
 
 </body>
